@@ -1,57 +1,244 @@
- 
-
- 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modern Music Player</title>
+<title>Audio Player</title>
 
-<!-- TailwindCSS CDN -->
+<!-- TailwindCSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 min-h-screen">
 
-<div class="w-full max-w-md bg-gray-800 rounded-2xl shadow-xl p-6">
+<!-- Header -->
+<div class="flex justify-between items-center p-4 border-b bg-white shadow">
+    <h1 class="text-2xl font-bold text-blue-700">The Economist</h1>
 
-  <!-- Title -->
-  <h2 class="text-2xl font-bold mb-4 text-center">🎵 Dec 25 </h2>
+    <div>
+      <input type="date" class="border p-2 rounded shadow-sm" value="2025-12-06">
+    </div>
+</div>
 
-  <!-- Album Art -->
-  <div class="flex justify-center mb-4">
-    <img src="https://via.placeholder.com/250x250.png?text=Album+Art"
-         class="rounded-xl shadow-lg w-48 h-48 object-cover" />
-  </div>
+<!-- Main Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
 
-  <!-- Song Info -->
-  <div class="text-center mb-4">
-    <p class="text-lg font-semibold">My Track</p>
-    <p class="text-gray-400 text-sm">Artist Name</p>
-  </div>
+    <!-- LEFT COLUMN — PLAYLIST -->
+    <div class="col-span-1 bg-white rounded-xl shadow p-4">
+        <div class="text-gray-600 font-bold mb-3">
+            DEC 6TH 2025  
+            <span class="ml-2 bg-yellow-300 text-gray-800 px-2 py-1 rounded text-xs">Playlist/RSS</span>
+        </div>
 
-  <!-- Audio Player -->
-  <audio id="player" src="./7a5f987b6334f44b325fea5fb71c23be.mp3" class="w-full" controls></audio>
-<audio controls> 
-  <source src="./080 Science and technology - Autism-2a1652fa359f418ba18503a13a2d09ba.mp3" type="audio/mpeg">Audism
-</audio>
-  <!-- Custom Buttons -->
-  <div class="flex justify-center mt-6 space-x-6">
-    <button onclick="document.getElementById('player').play()"
-            class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-xl">
-        ▶ Play
-    </button>
+        <div id="playlist" class="overflow-y-auto h-[70vh] space-y-2">
 
-    <button onclick="document.getElementById('player').pause()"
-            class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-xl">
-        ⏸ Pause
-    </button>
-  </div>
+            <!-- Example playlist items -->
+            <div onclick="selectTrack(0)" 
+                 class="track-item p-3 rounded cursor-pointer bg-pink-200 border-l-4 border-blue-600">
+                <div class="font-semibold text-blue-900">working mum</div>
+                <div class="text-sm text-gray-600">002 Politics</div>
+            </div>
+
+            <div onclick="selectTrack(1)" 
+                 class="track-item p-3 rounded cursor-pointer bg-gray-200">
+                <div class="font-semibold">The world this week</div>
+                <div class="text-sm text-gray-600">003 Business</div>
+            </div>
+
+            <div onclick="selectTrack(2)" 
+                 class="track-item p-3 rounded cursor-pointer bg-gray-200">
+                <div class="font-semibold">Leaders</div>
+                <div class="text-sm text-gray-600">005 Britain’s slot-machine politics</div>
+            </div>
+
+            <div onclick="selectTrack(3)" 
+                 class="track-item p-3 rounded cursor-pointer bg-gray-200">
+                <div class="font-semibold">Leaders</div>
+                <div class="text-sm text-gray-600">006 How AI is rewiring childhood</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN — PLAYER -->
+    <div class="col-span-2 bg-white rounded-xl shadow p-4">
+
+        <div id="trackTitle" class="text-xl font-bold">The world this week</div>
+        <div id="trackDesc" class="text-gray-600 mb-3">Politics</div>
+
+        <!-- Read Article Button -->
+        <button class="mb-4 px-3 py-1 bg-yellow-300 text-gray-800 text-sm rounded shadow">
+            Read Article
+        </button>
+
+        <!-- Player Controls -->
+        <div class="bg-gray-50 border rounded-xl p-4 shadow">
+
+            <div class="flex justify-center space-x-6 text-2xl mb-4">
+                <button onclick="shuffleTrack()">🔀</button>
+                <button onclick="prevTrack()">⏮</button>
+                <button onclick="togglePlay()" id="playBtn">▶</button>
+                <button onclick="nextTrack()">⏭</button>
+                <button onclick="toggleRepeat()">🔁</button>
+            </div>
+
+            <!-- Progress -->
+            <div class="flex items-center space-x-2">
+                <span id="currentTime">00:00</span>
+                <input id="seek" type="range" min="0" max="100"
+                       class="flex-1">
+                <span id="duration">00:00</span>
+            </div>
+
+            <!-- Volume -->
+            <div class="flex items-center space-x-2 mt-3">
+                <span>🔊</span>
+                <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" class="w-40">
+            </div>
+
+        </div>
+
+        <audio id="audio">7a5f987b6334f44b325fea5fb71c23be.mp3</audio>
+    </div>
 
 </div>
 
+<script>
+// ----------------------------
+// PLAYLIST DATA
+// ----------------------------
+const playlist = [
+    {
+        title: "The world this week",
+        desc: "Politics",
+        file: "music/track1.mp3"
+    },
+    {
+        title: "The world this week",
+        desc: "Business",
+        file: "music/track2.mp3"
+    },
+    {
+        title: "Leaders",
+        desc: "Britain’s slot-machine politics",
+        file: "music/track3.mp3"
+    },
+    {
+        title: "Leaders",
+        desc: "How AI is rewiring childhood",
+        file: "music/track4.mp3"
+    }
+];
+
+let currentIndex = 0;
+let audio = document.getElementById("audio");
+
+// ----------------------------
+// LOAD TRACK
+// ----------------------------
+function loadTrack(index) {
+    currentIndex = index;
+    audio.src = playlist[index].file;
+
+    document.getElementById("trackTitle").textContent = playlist[index].title;
+    document.getElementById("trackDesc").textContent = playlist[index].desc;
+
+    highlightSelection();
+}
+
+// Highlight selected track
+function highlightSelection() {
+    let items = document.querySelectorAll(".track-item");
+    items.forEach((el, i) => {
+        el.classList.remove("bg-pink-200", "border-l-4", "border-blue-600");
+        if (i === currentIndex) {
+            el.classList.add("bg-pink-200", "border-l-4", "border-blue-600");
+        }
+    });
+}
+
+// ----------------------------
+// USER ACTIONS
+// ----------------------------
+function selectTrack(i) {
+    loadTrack(i);
+    audio.play();
+    updatePlayButton();
+}
+
+function togglePlay() {
+    if (audio.paused) audio.play();
+    else audio.pause();
+    updatePlayButton();
+}
+
+function prevTrack() {
+    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(currentIndex);
+    audio.play();
+    updatePlayButton();
+}
+
+function nextTrack() {
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadTrack(currentIndex);
+    audio.play();
+    updatePlayButton();
+}
+
+function shuffleTrack() {
+    currentIndex = Math.floor(Math.random() * playlist.length);
+    loadTrack(currentIndex);
+    audio.play();
+}
+
+let repeat = false;
+function toggleRepeat() {
+    repeat = !repeat;
+    audio.loop = repeat;
+}
+
+// ----------------------------
+// PLAYER UI UPDATE
+// ----------------------------
+function updatePlayButton() {
+    document.getElementById("playBtn").textContent = audio.paused ? "▶" : "⏸";
+}
+
+// Update Seek + Time
+audio.addEventListener("timeupdate", () => {
+    let seek = document.getElementById("seek");
+    seek.value = (audio.currentTime / audio.duration) * 100;
+
+    document.getElementById("currentTime").textContent =
+        formatTime(audio.currentTime);
+    document.getElementById("duration").textContent =
+        formatTime(audio.duration);
+});
+
+// Seek manually
+document.getElementById("seek").addEventListener("input", function () {
+    audio.currentTime = (this.value / 100) * audio.duration;
+});
+
+// Volume control
+document.getElementById("volume").addEventListener("input", function () {
+    audio.volume = this.value;
+});
+
+// Time formatter
+function formatTime(sec) {
+    if (!sec) return "00:00";
+    let m = Math.floor(sec / 60);
+    let s = Math.floor(sec % 60);
+    return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+}
+
+// Load first track on startup
+loadTrack(0);
+updatePlayButton();
+
+</script>
+
 </body>
 </html>
-
