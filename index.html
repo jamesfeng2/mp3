@@ -1,15 +1,57 @@
+ 
+
+ 
+
 <!DOCTYPE html>
-<html>
-<body>
-  <h3>2025 Dec</h3>
-<b>Mama dram</b>
-<audio controls>
-  <source src="./7a5f987b6334f44b325fea5fb71c23be.mp3" type="audio/mpeg">Mama drama: the row over China’s “mum jobs” 
-</audio>
-<bold>Autism</bold>  
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modern Music Player</title>
+
+<!-- TailwindCSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+<div class="w-full max-w-md bg-gray-800 rounded-2xl shadow-xl p-6">
+
+  <!-- Title -->
+  <h2 class="text-2xl font-bold mb-4 text-center">🎵 Dec 25 </h2>
+
+  <!-- Album Art -->
+  <div class="flex justify-center mb-4">
+    <img src="https://via.placeholder.com/250x250.png?text=Album+Art"
+         class="rounded-xl shadow-lg w-48 h-48 object-cover" />
+  </div>
+
+  <!-- Song Info -->
+  <div class="text-center mb-4">
+    <p class="text-lg font-semibold">My Track</p>
+    <p class="text-gray-400 text-sm">Artist Name</p>
+  </div>
+
+  <!-- Audio Player -->
+  <audio id="player" src="./7a5f987b6334f44b325fea5fb71c23be.mp3" class="w-full" controls></audio>
 <audio controls> 
   <source src="./080 Science and technology - Autism-2a1652fa359f418ba18503a13a2d09ba.mp3" type="audio/mpeg">Audism
 </audio>
+  <!-- Custom Buttons -->
+  <div class="flex justify-center mt-6 space-x-6">
+    <button onclick="document.getElementById('player').play()"
+            class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-xl">
+        ▶ Play
+    </button>
+
+    <button onclick="document.getElementById('player').pause()"
+            class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-xl">
+        ⏸ Pause
+    </button>
+  </div>
+
+</div>
 
 </body>
 </html>
+
