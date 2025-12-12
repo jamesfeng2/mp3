@@ -60,7 +60,7 @@
     <div class="col-span-2 bg-white rounded-xl shadow p-4">
 
         <div id="trackTitle" class="text-xl font-bold">The world this week</div>
-        <div id="trackDesc" class="text-gray-600 mb-3">Politics</div>
+       
 
         <!-- Read Article Button -->
         <button class="mb-4 px-3 py-1 bg-yellow-300 text-gray-800 text-sm rounded shadow">
@@ -93,12 +93,8 @@
             </div>
 
         </div>
-        <div>
-            <p>
-                <li>“grasping for an answer”是一个固定搭配，意思是“竭力寻找答案”或“ desperate for a solution”。</li>
-                <li></li>
-            </p>
-        </div>
+         <div id="trackDesc" class="text-gray-600 mb-3"> placeholder </div>
+       
         <audio id="audio"></audio>
     </div>
 
@@ -116,7 +112,9 @@ const playlist = [
     },
     {
         title: "Autisim",
-        desc: "Business",
+        desc: `<li>grasping for an answer”是一个固定搭配，意思是“竭力寻找答案”或“ desperate for a solution</li>
+            <li>sdf</li>
+            `,
         file: "080 Science and technology - Autism-2a1652fa359f418ba18503a13a2d09ba.mp3"
     },
     {
@@ -205,7 +203,7 @@ function toggleRepeat() {
 function updatePlayButton() {
     document.getElementById("playBtn").textContent = audio.paused ? "▶" : "⏸";
 
-    document.getElementById("trackDesc").textContent = playlist[index].desc;
+     
 }
 
 // Update Seek + Time
