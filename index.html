@@ -140,7 +140,7 @@ function loadTrack(index) {
     audio.src = playlist[index].file;
 
     document.getElementById("trackTitle").textContent = playlist[index].title;
-    document.getElementById("trackDesc").textContent = playlist[index].desc;
+    document.getElementById("trackDesc").innerHTML  = playlist[index].desc;
     highlightSelection();
 
 }
