@@ -142,9 +142,8 @@ function loadTrack(index) {
     audio.src = playlist[index].file;
 
     document.getElementById("trackTitle").textContent = playlist[index].title;
-    highlightSelection();
-  
     document.getElementById("trackDesc").textContent = playlist[index].desc;
+    highlightSelection();
 
 }
 
@@ -205,6 +204,8 @@ function toggleRepeat() {
 // ----------------------------
 function updatePlayButton() {
     document.getElementById("playBtn").textContent = audio.paused ? "▶" : "⏸";
+
+    document.getElementById("trackDesc").textContent = playlist[index].desc;
 }
 
 // Update Seek + Time
