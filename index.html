@@ -165,7 +165,7 @@ let audio = document.getElementById("audio");
 function loadTrack(index) {
     currentIndex = index;
     currentTrack = 0;
-    audio.src = playlist[index].files[curTrack];
+    audio.src = playlist[index].files[currentTrack];
 
     document.getElementById("trackTitle").textContent = playlist[index].title;
     document.getElementById("trackDesc").innerHTML  = playlist[index].desc;
