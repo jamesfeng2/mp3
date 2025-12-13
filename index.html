@@ -223,18 +223,16 @@ function prevTrack() {
 }
 
 function nextTrack() {
-    currentIndex = (currentIndex + 1) % playlist.length;
+ //   currentIndex = (currentIndex + 1) % playlist.length;
     loadTrack(currentIndex);
-    audio.play();
-    updatePlayButton();
-
-    audio.onended = () => {
     currentTrack++;
-    if (currentTrack < playlist[currentIndex].files.length) {
-      audio.src = playlist[currentIndex].files[currentTrack];
+    if (currentTrack < playlist[i].files.length) {
+      audio.src = playlist[i].files[currentTrack];
       audio.play();
     }
-  };
+    updatePlayButton();
+
+     
 
 }
 
