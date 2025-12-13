@@ -250,7 +250,7 @@ function nextTrack() {
 
 function nextOne() {
  //   currentIndex = (currentIndex + 1) % playlist.length;
-    loadTrack(currentIndex);
+ //   loadTrack(currentIndex);
     currentTrack++;
     if (currentTrack < playlist[currentIndex].files.length) {
       audio.src = playlist[currentIndex].files[currentTrack];
