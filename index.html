@@ -86,9 +86,10 @@
             <div class="flex justify-center space-x-6 text-2xl mb-4">
                 <button onclick="shuffleTrack()">🔀</button>
                 <button onclick="prevTrack()">⏮</button>
+                <button onclick="prevOne()">⏪</button>
                 <button onclick="togglePlay()" id="playBtn">▶</button>
+                 <button onclick="nextOne()">⏩</button>  
                 <button onclick="nextTrack()">⏭</button>
-                 <button onclick="nextOne()">⏩</button>
                 <button onclick="toggleRepeat()">🔁</button>
             </div>
 
@@ -247,6 +248,18 @@ function nextTrack() {
   }; 
 
 }    
+
+function prevOne() {
+    currentTrack--;
+    if (-1 < currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
+      audio.play();
+
+      document.getElementById("trackDesc").innerHTML  = playlist[currentIndex].files[currentTrack];  
+    }
+    updatePlayButton();
+    
+}
 
 function nextOne() {
  //   currentIndex = (currentIndex + 1) % playlist.length;
