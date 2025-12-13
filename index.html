@@ -132,7 +132,7 @@ const playlist = [
     {
         title: "Unfinished business: quantum physics turns 100",
         desc: "how a mind-bending theory shapes modern technology",
-        file: ["724597d29f25c681ed7e8ae3fae7a280.mp3","b748d6f0aa9a0df9003aff308af43a1c.mp3"]
+        files: ["724597d29f25c681ed7e8ae3fae7a280.mp3","b748d6f0aa9a0df9003aff308af43a1c.mp3"]
     },
     {
         title: "Australia",
@@ -156,6 +156,7 @@ Today no single change can hoist productivity growth back to its long-term avera
 ];
 
 let currentIndex = 0;
+let currentTrack = 0:
 let audio = document.getElementById("audio");
 
 // ----------------------------
@@ -163,7 +164,8 @@ let audio = document.getElementById("audio");
 // ----------------------------
 function loadTrack(index) {
     currentIndex = index;
-    audio.src = playlist[index].file;
+    currentTrack = 0;
+    audio.src = playlist[index].files[curTrack];
 
     document.getElementById("trackTitle").textContent = playlist[index].title;
     document.getElementById("trackDesc").innerHTML  = playlist[index].desc;
@@ -189,6 +191,14 @@ function selectTrack(i) {
     loadTrack(i);
     audio.play();
     updatePlayButton();
+    
+    audio.onended = () => {
+    currentTrack++;
+    if (currentTrack < playlist[i].files.length) {
+      audio.src = playlist[i].files[currentTrack];
+      audio.play();
+    }
+  };
 }
 
 function togglePlay() {
@@ -202,6 +212,14 @@ function prevTrack() {
     loadTrack(currentIndex);
     audio.play();
     updatePlayButton();
+
+        audio.onended = () => {
+    currentTrack++;
+    if (currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
+      audio.play();
+    }
+  };
 }
 
 function nextTrack() {
@@ -209,12 +227,30 @@ function nextTrack() {
     loadTrack(currentIndex);
     audio.play();
     updatePlayButton();
+
+    audio.onended = () => {
+    currentTrack++;
+    if (currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
+      audio.play();
+    }
+  };
+
 }
 
 function shuffleTrack() {
     currentIndex = Math.floor(Math.random() * playlist.length);
     loadTrack(currentIndex);
     audio.play();
+
+        audio.onended = () => {
+    currentTrack++;
+    if (currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
+      audio.play();
+    }
+  };
+
 }
 
 let repeat = false;
