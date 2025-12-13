@@ -255,6 +255,8 @@ function nextOne() {
     if (currentTrack < playlist[currentIndex].files.length) {
       audio.src = playlist[currentIndex].files[currentTrack];
       audio.play();
+
+      document.getElementById("trackDesc").innerHTML  = playlist[currentIndex].files[currentTrack];  
     }
     updatePlayButton();
 
