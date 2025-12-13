@@ -84,6 +84,7 @@
                 <button onclick="prevTrack()">⏮</button>
                 <button onclick="togglePlay()" id="playBtn">▶</button>
                 <button onclick="nextTrack()">⏭</button>
+                 <button onclick="nextOne()">⏭⏭</button>
                 <button onclick="toggleRepeat()">🔁</button>
             </div>
 
@@ -213,7 +214,7 @@ function prevTrack() {
     audio.play();
     updatePlayButton();
 
-        audio.onended = () => {
+    audio.onended = () => {
     currentTrack++;
     if (currentTrack < playlist[currentIndex].files.length) {
       audio.src = playlist[currentIndex].files[currentTrack];
@@ -223,11 +224,27 @@ function prevTrack() {
 }
 
 function nextTrack() {
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadTrack(currentIndex);
+    audio.play(); 
+    updatePlayButton();
+
+    audio.onended = () => {
+    currentTrack++;
+    if (currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
+      audio.play();
+    }
+  }; 
+
+}    
+
+function nextOne() {
  //   currentIndex = (currentIndex + 1) % playlist.length;
     loadTrack(currentIndex);
     currentTrack++;
-    if (currentTrack < playlist[i].files.length) {
-      audio.src = playlist[i].files[currentTrack];
+    if (currentTrack < playlist[currentIndex].files.length) {
+      audio.src = playlist[currentIndex].files[currentTrack];
       audio.play();
     }
     updatePlayButton();
